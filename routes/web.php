@@ -19,31 +19,25 @@ Route::middleware('auth')->group(function () {
 
 
 
+    Route::prefix('item-categories')->group(function () {
+        // List all categories
+        Route::get('/', [ItemCategoryController::class, 'index'])->name('item.categories.index');
 
+        // Show a specific category
+        Route::get('/{id}', [ItemCategoryController::class, 'show'])->name('item.categories.show');
 
-    // Route::prefix('item_categories')->group(function () {
-    //     // List all categories
-    //     Route::get('/', [ItemCategoryController::class, 'index'])->name('item_categories.index');
+        // Store a new category
+        Route::post('/', [ItemCategoryController::class, 'store'])->name('item.categories.store');
 
-    //     // Show a specific category
-    //     Route::get('/{id}', [ItemCategoryController::class, 'show'])->name('item_categories.show');
+        // Update a category
+        Route::put('/{id}', [ItemCategoryController::class, 'update'])->name('item.categories.update');
 
-    //     // Store a new category
-    //     Route::post('/', [ItemCategoryController::class, 'store'])->name('item_categories.store');
-
-    //     // Update a category
-    //     Route::put('/{id}', [ItemCategoryController::class, 'update'])->name('item_categories.update');
-
-    //     // Delete a category
-    //     Route::delete('/{id}', [ItemCategoryController::class, 'destroy'])->name('item_categories.destroy');
-    // });
-
-
-    Route::resource('item_categories', ItemCategoryController::class);
-    Route::post('item_categories/{id}/restore', [ItemCategoryController::class, 'restore'])->name('item_categories.restore');
+        // Delete a category
+        Route::delete('/{id}', [ItemCategoryController::class, 'destroy'])->name('item.categories.destroy');
+    });
 
     //dasboard management route
-   
+
 
     Route::get('/management-dashboard', [DashboardController::class, 'management'])->name('management.dashboard');
 

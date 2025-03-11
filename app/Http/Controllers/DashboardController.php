@@ -28,15 +28,8 @@ class DashboardController extends Controller
     }
     public function management()
     {
-        // Fetch counts
-        // $totalItemCategories = ItemCategoryController::count();
 
-        // Define user permissions (In a real app, these should be fetched dynamically from roles/permissions)
-        $userPermissions = [
-            'viewItemCategory',
-            'addItemCategory'
-        ];
 
-        return view('dashboard.management', compact('totalItemCategories', 'userPermissions'));
+        return view('management');
     }
 }

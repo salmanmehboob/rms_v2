@@ -3,13 +3,13 @@
 
 <head>
     <!-- PAGE TITLE HERE -->
-    <title>Dashboard</title>
+    <title> @yield('title')</title>
     @include ('layouts.header_files')
 </head>
 
 <body>
 
-    @include ('layouts.preloader')
+{{--    @include ('layouts.preloader')--}}
     <!--**********************************
         Main wrapper start
     ***********************************-->

@@ -3,29 +3,28 @@
 @section('title', 'Management Dashboard')
 
 @section('content')
-<div class="container-fluid">
+
     <div class="row">
 
         {{-- Item Categories Section --}}
-        @if (in_array('viewItemCategory', $userPermissions) || in_array('addItemCategory', $userPermissions))
         <div class="col-xl-3 col-lg-6 col-sm-6">
             <div class="widget-stat card bg-info">
                 <div class="card-body p-4">
-                    <a href="{{ route('item_categories.index') }}">
+                    <a href="{{ route('item.categories.index') }}">
                         <div class="media">
                             <span class="mr-3">
                                 <i class="flaticon-381-archive"></i>
                             </span>
                             <div class="media-body text-white text-right">
                                 <p class="mb-1">Item Categories</p>
-                                <h3 class="text-white">{{ $totalItemCategories }}</h3>
+                                <h3 class="text-white">0</h3>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
-        @endif
+
 
         {{-- Placeholder for Users Section --}}
         <div class="col-xl-3 col-lg-6 col-sm-6">
@@ -104,5 +103,5 @@
         </div>
 
     </div>
-</div>
+
 @endsection

@@ -15,16 +15,7 @@
             <h6>Add Item Category</h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('item_categories.store') }}" method="POST">
-                @csrf
 
-                <div class="form-group">
-                    <label>Category Name<span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control" placeholder="Category Name" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
         </div>
     </div>
 </div>

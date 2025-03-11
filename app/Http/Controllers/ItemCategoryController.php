@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ItemCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemCategoryController extends Controller
 {
@@ -12,8 +13,9 @@ class ItemCategoryController extends Controller
      */
     public function index()
     {
+        $title = 'Item Category';
         $itemCategories = ItemCategory::all();
-        return view('item_categories.index', compact('itemCategories'));
+        return view('item_categories.index', compact('title','itemCategories'));
     }
 
     /**
@@ -29,18 +31,35 @@ class ItemCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // Validate the request data
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255|unique:item_categories,name',
-            'status' => 'boolean',
         ]);
 
-        ItemCategory::create([
-            'name' => $request->name,
-            'status' => $request->status ?? 0,
-        ]);
 
-        return redirect()->route('item_categories.index')->with('success', 'Category added successfully.');
+        try {
+            // Start a database transaction
+            DB::beginTransaction();
+
+            // Create the item category
+            ItemCategory::create([
+                'name' => $validatedData['name'],
+                'status' => $validatedData['status'] ?? 0,
+            ]);
+
+            // Commit the transaction
+            DB::commit();
+
+            return redirect()->route('item.categories.index')->with('success', 'Category added successfully.');
+        } catch (\Exception $e) {
+            // Rollback the transaction on error
+            DB::rollBack();
+
+            // Return back with error message and input
+            return redirect()->back()->withErrors(['error' => 'Something went wrong. Please try again.'])->withInput();
+        }
     }
+
 
     /**
      * Show the form to edit an item category.
@@ -53,21 +72,21 @@ class ItemCategoryController extends Controller
     /**
      * Update an item category.
      */
-    public function update(Request $request, ItemCategory $itemCategory)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:item_categories,name,' . $itemCategory->id,
-            'status' => 'boolean',
+            'name' => 'required|string|max:255|unique:item_categories,name,' . $id,
         ]);
 
-        $itemCategory->update([
-            'name' => $request->name,
-            'status' => $request->status ?? 0,
-        ]);
+        try {
+            $category = ItemCategory::findOrFail($id);
+            $category->update(['name' => $request->name]);
 
-        return redirect()->route('item_categories.index')->with('success', 'Category updated successfully.');
+            return redirect()->route('item.categories.index')->with('success', 'Category updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to update category.']);
+        }
     }
-
     /**
      * Delete an item category.
      */

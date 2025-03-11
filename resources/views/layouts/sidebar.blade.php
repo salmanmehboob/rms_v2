@@ -19,7 +19,7 @@
                   <ul aria-expanded="false">
 
                       <li><a href="index.html">Dashboard </a></li>
-                      <li><a href="<a href=" {{ route('management.dashboard') }}">Management Dashboard </a></li>
+                      <li><a href="{{ route('management.dashboard') }}">Management Dashboard </a></li>
                       <li><a href="order-list.html">Kitchen Dashboard</a></li>
                   </ul>
               </li>
