@@ -15,5 +15,8 @@
 <!-- Datatable -->
 <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 
+<!-- Sweet Alert -->
+<link href="{{asset('assets/vendor/sweetalert2/dist/sweetalert2.min.css')}}" rel="stylesheet">
+
 <!-- Style css -->
 <link href="{{ asset('assets/css/style.css')  }}" rel="stylesheet">

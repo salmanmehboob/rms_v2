@@ -27,7 +27,7 @@
                     </form>
                 </div>
                 <div class="col-md-8">
-                    <table class="table table-striped datatable">
+                    <table class="table table-striped" id="itemCategoriesTable">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -36,24 +36,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($itemCategories as $category)
-                            <tr>
-                                <td>{{ $category->id }}</td>
-                                <td>{{ $category->name }}</td>
-
-                                <td>
-                                    <div class="d-flex">
-                                        <a id="editBtn" data-url="{{ route('item.categories.update',$category->id) }}"
-                                           data-id="{{ $category->id }}" data-name="{{ $category->name }}" href="#"
-                                           class="btn btn-primary shadow btn-xs sharp me-1"><i
-                                                class="fas fa-pencil-alt"></i></a>
-                                        <a id="deleteBtn" data-id="{{ $category->id }}"
-                                           data-name="{{ $category->name }}" href="#"
-                                           class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -88,6 +70,17 @@
                 $('input[name="name"]').val(''); // Clear the input field
                 $('#submitBtn').text('Save'); // Reset button text
                 $(this).addClass('d-none');
+            });
+
+            $('#itemCategoriesTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('item.categories.index') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                ]
             });
         });
     </script>

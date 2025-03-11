@@ -11,12 +11,37 @@ class ItemCategoryController extends Controller
     /**
      * Display all item categories.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Item Category';
-        $itemCategories = ItemCategory::all();
-        return view('item_categories.index', compact('title','itemCategories'));
+
+        if ($request->ajax()) {
+            $itemCategories = ItemCategory::select(['id', 'name']);
+            return datatables()->of($itemCategories)
+                ->addColumn('actions', function ($category) {
+                    return '
+                    <div class="d-flex">
+                        <a id="editBtn" data-url="' . route('item.categories.update', $category->id) . '"
+                           data-id="' . $category->id . '" data-name="' . $category->name . '" href="javascript:void(0)"
+                           class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+
+                        <a href="javascript:void(0)"
+                           data-url="' . route('item.categories.destroy', $category->id) . '"
+                           data-label="delete"
+                           data-id="' . $category->id . '"
+                           data-table="itemCategoriesTable"
+                           class="btn btn-danger shadow btn-xs sharp delete-record"
+                           title="Delete Record"><i class="fa fa-trash"></i></a>
+                    </div>
+                ';
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
+        return view('item_categories.index', compact('title'));
     }
+
 
     /**
      * Show the form to create a new item category.
@@ -87,12 +112,20 @@ class ItemCategoryController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to update category.']);
         }
     }
+
     /**
      * Delete an item category.
      */
-    public function destroy(ItemCategory $itemCategory)
+    public function destroy($id)
     {
-        $itemCategory->delete();
-        return redirect()->route('item_categories.index')->with('success', 'Category deleted successfully.');
+        try {
+            $itemCategory = ItemCategory::findOrFail($id);
+            $itemCategory->delete();
+
+            return response()->json(['success' => 'Category deleted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete category.']);
+        }
     }
+
 }

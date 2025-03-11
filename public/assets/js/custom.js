@@ -129,4 +129,65 @@ $(document).ready(function () {
     // Initialize Select2
 
 
+    $(document).on('click', '.delete-record', function (e) {
+        e.preventDefault();
+
+        var url = $(this).data('url'); // Get delete URL
+        var id = $(this).data('id');   // Get record ID
+        var dataTable = $(this).data('table');   // Get record ID
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    data: {
+                        "_token": CSRF_TOKEN
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: response.success,
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                // Reload the DataTable on success
+                                $('#'+dataTable).DataTable().ajax.reload(null, false);
+
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something went wrong. Please try again later.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+
 });
