@@ -23,6 +23,8 @@
 <script src="{{ asset('assets/js/theme_custom.js')  }}"></script>
 <script src="{{ asset('assets/js/custom.js')  }}"></script>
 <script src="{{ asset('assets/js/deznav-init.js')  }}"></script>
+<script src="{{ asset('assets/js/styleSwitcher.js')  }}"></script>
+
 <script>
     var urlPath = '<?php echo url(""); ?>';
     var CSRF_TOKEN = '<?php echo csrf_token(); ?>';

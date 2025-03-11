@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ItemCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ItemCategoryController extends Controller
 {
@@ -56,34 +57,54 @@ class ItemCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255|unique:item_categories,name',
-        ]);
-
-
         try {
+            // Validate the request data
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255|unique:item_categories,name',
+            ]);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['errors' => $validator->errors()], 422);
+                }
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             // Start a database transaction
             DB::beginTransaction();
 
             // Create the item category
             ItemCategory::create([
-                'name' => $validatedData['name'],
-                'status' => $validatedData['status'] ?? 0,
+                'name' => $request->name,
+                'status' => $request->status ?? 0,
             ]);
 
             // Commit the transaction
             DB::commit();
+
+            // Return success response for AJAX
+            if ($request->ajax()) {
+                return response()->json(['success' => 'Category added successfully.']);
+            }
 
             return redirect()->route('item.categories.index')->with('success', 'Category added successfully.');
         } catch (\Exception $e) {
             // Rollback the transaction on error
             DB::rollBack();
 
-            // Return back with error message and input
+            // Log the error for debugging
+            \Log::error('Category Store Error: ' . $e->getMessage());
+
+            // Return error response for AJAX
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Something went wrong. Please try again.'], 500);
+            }
+
             return redirect()->back()->withErrors(['error' => 'Something went wrong. Please try again.'])->withInput();
         }
     }
+
 
 
     /**
@@ -99,19 +120,45 @@ class ItemCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:item_categories,name,' . $id,
-        ]);
-
         try {
+            // Validate the request data
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255|unique:item_categories,name,' . $id,
+            ]);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['errors' => $validator->errors()], 422);
+                }
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            // Find the category
             $category = ItemCategory::findOrFail($id);
+
+            // Update the category
             $category->update(['name' => $request->name]);
+
+            // Return success response for AJAX
+            if ($request->ajax()) {
+                return response()->json(['success' => 'Category updated successfully.']);
+            }
 
             return redirect()->route('item.categories.index')->with('success', 'Category updated successfully.');
         } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Category Update Error: ' . $e->getMessage());
+
+            // Return error response for AJAX
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Failed to update category. Please try again.'], 500);
+            }
+
             return redirect()->back()->withErrors(['error' => 'Failed to update category.']);
         }
     }
+
 
     /**
      * Delete an item category.

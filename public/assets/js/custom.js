@@ -128,7 +128,7 @@ $(document).ready(function () {
     // }
     // Initialize Select2
 
-
+///////////////////////////////////AJAX Function Started/////////////////////////////////////
     $(document).on('click', '.delete-record', function (e) {
         e.preventDefault();
 
@@ -156,17 +156,21 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response.success) {
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: response.success,
-                                icon: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            }).then(() => {
-                                // Reload the DataTable on success
-                                $('#'+dataTable).DataTable().ajax.reload(null, false);
-
+                            toastr.success(response.success, "Deleted!", {
+                                timeOut: 2000,
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                preventDuplicates: true
                             });
+
+
+                            // Reload the DataTable on success
+                            setTimeout(function () {
+                                $('#' + datatable).DataTable().ajax.reload(null, false);
+                            }, 1000);
+
+
                         } else {
                             Swal.fire({
                                 title: 'Error!',
@@ -189,5 +193,62 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('submit', '.ajax-form', function (e) {
+        e.preventDefault();
 
+        let form = $(this);
+        let datatable = form.data('table');
+        let url = form.attr('action');
+        let submitBtn = form.find('.submit-btn');
+        let errorContainer = form.find('.text-danger');
+
+        // Clear any previous errors
+        errorContainer.text('');
+        submitBtn.prop('disabled', true);
+
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: form.serialize(),
+            success: function (response) {
+                toastr.success(response.success, "Success!", {
+                    timeOut: 2000,
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    preventDuplicates: true
+                });
+
+                // Reload the DataTable after 1 second
+                setTimeout(function () {
+                    $('#' + datatable).DataTable().ajax.reload(null, false);
+                }, 1000);
+
+                // Reset the form
+                form[0].reset();
+                submitBtn.prop('disabled', false);
+            },
+            error: function (xhr) {
+                submitBtn.prop('disabled', false);
+
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, message) {
+                        form.find(`#${key}Error`).text(message[0]);
+                    });
+
+
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        });
+    });
+
+//==================================AJAX Ended==================================================//
 });

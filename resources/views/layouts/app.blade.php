@@ -9,7 +9,7 @@
 
 <body>
 
-{{--    @include ('layouts.preloader')--}}
+    @include ('layouts.preloader')
     <!--**********************************
         Main wrapper start
     ***********************************-->

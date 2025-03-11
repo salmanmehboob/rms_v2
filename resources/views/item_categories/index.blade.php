@@ -10,24 +10,27 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4">
-                    <form action="{{ route('item.categories.store') }}" method="POST">
+                    <form class="ajax-form" data-table="itemCategoriesTable"
+                          action="{{ route('item.categories.store') }}" method="POST">
                         @csrf
 
                         <div class="form-group">
                             <label>Category Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" placeholder="Category Name">
-                            @if ($errors->has('name'))
-                                <div class="text-danger mt-1">{{ $errors->first('name') }}</div>
-                            @endif
+                            <input type="text" name="name" id="categoryName" class="form-control"
+                                   placeholder="Category Name">
+                            <div id="nameError" class="text-danger mt-1"></div>
                         </div>
-                        <button type="submit" id="submitBtn" class="btn btn-primary mt-3 float-end">Save</button>
-                        <button type="button" id="newCategoryBtn" class="btn btn-secondary mt-3 float-end me-2 d-none">
-                            Add {{ $title }}</button>
 
+                        <button type="submit" id="submitBtn" class="btn btn-primary mt-3 float-end submit-btn">Save
+                        </button>
+                        <button type="button" id="cancelBtn" class="btn btn-secondary mt-3 float-end me-2 d-none">
+                            Cancel Update
+                        </button>
                     </form>
+
                 </div>
                 <div class="col-md-8">
-                    <table class="table table-striped" id="itemCategoriesTable">
+                    <table class="display table" id="itemCategoriesTable">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -38,6 +41,7 @@
                         <tbody>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -60,11 +64,11 @@
                 $('form').append('@method("PUT")'); // Add PUT method for update
                 $('input[name="name"]').val(name); // Set the name value
                 $('#submitBtn').text('Update'); // Change button text
-                $('#newCategoryBtn').removeClass('d-none');
+                $('#cancelBtn').removeClass('d-none');
             });
 
             // Reset form on new category add
-            $(document).on('click', '#newCategoryBtn', function () {
+            $(document).on('click', '#cancelBtn', function () {
                 $('form').attr('action', "{{ route('item.categories.store') }}"); // Reset to store action
                 $('form').find('input[name="_method"]').remove(); // Remove the PUT method
                 $('input[name="name"]').val(''); // Clear the input field

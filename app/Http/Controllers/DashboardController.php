@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
+use App\Models\ItemCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ItemCategoryController;
 
@@ -29,7 +31,8 @@ class DashboardController extends Controller
     public function management()
     {
 
-
-        return view('management');
+        $itemCategoryCount = ItemCategory::count();
+        $itemCount = Item::count();
+         return view('management',compact('itemCategoryCount' ,'itemCount'));
     }
 }
