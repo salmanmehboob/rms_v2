@@ -29,7 +29,7 @@
         <div class="col-xl-3 col-lg-6 col-sm-6">
             <div class="widget-stat card bg-primary">
                 <div class="card-body p-4">
-                    <a href="#">
+                    <a href="{{ route('items.index') }}">
                         <div class="media">
                             <span class="mr-3">
                                 <i class="flaticon-381-umbrella"></i>

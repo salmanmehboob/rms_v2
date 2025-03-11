@@ -17,7 +17,7 @@ class Item extends Model
         'quantity',
         'cost_price',
         'retail_price',
-        'status',
+        'is_stock',
     ];
 
     // Relationship with ItemCategory Model

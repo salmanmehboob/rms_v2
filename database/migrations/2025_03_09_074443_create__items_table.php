@@ -24,7 +24,7 @@ class CreateItemsTable extends Migration
             $table->integer('quantity'); // INT(11) NOT NULL
             $table->decimal('cost_price', 20); // VARCHAR(20) NOT NULL
             $table->decimal('retail_price', 20); // VARCHAR(20) NOT NULL
-            $table->boolean('status')->default(0); // TINYINT(1) NULL DEFAULT '0'
+            $table->boolean('is_stock')->default(0); // TINYINT(1) NULL DEFAULT '0'
 
             $table->timestamps(); // created_at & updated_at
             $table->softDeletes(); // deleted_at (for soft delete support)

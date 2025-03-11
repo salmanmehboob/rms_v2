@@ -21,9 +21,8 @@
                       <li class="{{ Route::is('home') ? 'mm-active' : '' }}">
                           <a href="{{ route('home') }}">Dashboard</a>
                       </li>
-                      <li class="{{ Route::is('management.dashboard', 'item.categories.index') ? 'mm-active' : '' }}">
-                          <a href="{{ route('management.dashboard') }}"  class="{{ Route::is('management.dashboard', 'item.categories.index') ? 'mm-active' : '' }}">Management Dashboard</a>
-                      </li>
+                      <li class="{{ Route::is('management.dashboard', 'item.categories.index' ,  'items.index') ? 'mm-active' : '' }}">
+                          <a href="{{ route('management.dashboard') }}"  class="{{ Route::is('management.dashboard', 'item.categories.index', 'items.index') ? 'mm-active' : '' }}">Management Dashboard</a>
 
 
                       <li><a href="order-list.html">Kitchen Dashboard</a></li>
