@@ -21,8 +21,9 @@ class Item extends Model
     ];
 
     // Relationship with ItemCategory Model
-    public function category()
+    public function itemCategory()
     {
-        return $this->belongsTo(ItemCategory::class, 'item_category_id');
+        return $this->belongsTo(ItemCategory::class, 'item_category_id', 'id');
     }
+
 }

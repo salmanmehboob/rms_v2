@@ -12,23 +12,18 @@ class CreateItemsTable extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id(); // BIGINT UNSIGNED AUTO_INCREMENT (Primary Key)
-
-            // Foreign key reference to item_categories table
-            $table->foreignId('item_category_id')
-                ->constrained('item_categories')
-                ->cascadeOnDelete(); // Ensures category deletion cascades to items
-
-            $table->string('name'); // VARCHAR(255) NOT NULL
-            $table->string('image', 100)->nullable(); // VARCHAR(100) NULL DEFAULT NULL
-            $table->integer('quantity'); // INT(11) NOT NULL
-            $table->decimal('cost_price', 20); // VARCHAR(20) NOT NULL
-            $table->decimal('retail_price', 20); // VARCHAR(20) NOT NULL
-            $table->boolean('is_stock')->default(0); // TINYINT(1) NULL DEFAULT '0'
-
-            $table->timestamps(); // created_at & updated_at
-            $table->softDeletes(); // deleted_at (for soft delete support)
+            $table->id();
+            $table->foreignId('item_category_id')->constrained('item_categories')->onDelete('cascade');
+            $table->string('name');
+            $table->string('image')->nullable();
+            $table->integer('quantity');
+            $table->decimal('cost_price', 10, 2);
+            $table->decimal('retail_price', 10, 2);
+            $table->boolean('is_stock')->default(1);
+            $table->softDeletes();
+            $table->timestamps();
         });
+
     }
 
     /**

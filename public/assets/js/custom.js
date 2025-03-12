@@ -117,24 +117,23 @@ $(document).ready(function () {
         console.error('DataTables is not loaded.');
     }
 
-    //
-    // if ($.fn.select2) {
-    //     $('.select2').select2({
-    //         placeholder: "Select Option",
-    //         allowClear: true
-    //     });
-    // } else {
-    //     console.error('Select2 is not loaded.');
-    // }
+
+    if ($.fn.select2) {
+        $('.select2').select2({
+            placeholder: "Select Option"
+        });
+    } else {
+        console.error('Select2 is not loaded.');
+    }
+
     // Initialize Select2
 
 ///////////////////////////////////AJAX Function Started/////////////////////////////////////
     $(document).on('click', '.delete-record', function (e) {
         e.preventDefault();
 
-        var url = $(this).data('url'); // Get delete URL
-        var id = $(this).data('id');   // Get record ID
-        var dataTable = $(this).data('table');   // Get record ID
+        const url = $(this).data('url'); // Get delete URL
+         const dataTable = $(this).data('table');   // Get record ID
 
 
         Swal.fire({
@@ -167,7 +166,7 @@ $(document).ready(function () {
 
                             // Reload the DataTable on success
                             setTimeout(function () {
-                                $('#' + datatable).DataTable().ajax.reload(null, false);
+                                $('#' + dataTable).DataTable().ajax.reload(null, false);
                             }, 1000);
 
 
@@ -202,6 +201,9 @@ $(document).ready(function () {
         let submitBtn = form.find('.submit-btn');
         let errorContainer = form.find('.text-danger');
 
+        // Create a FormData object for file upload
+        let formData = new FormData(this);
+
         // Clear any previous errors
         errorContainer.text('');
         submitBtn.prop('disabled', true);
@@ -209,7 +211,9 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: form.serialize(),
+            data: formData,
+            processData: false,  // Prevent jQuery from automatically transforming the data into a query string
+            contentType: false,  // Let the browser set the content type (multipart/form-data)
             success: function (response) {
                 toastr.success(response.success, "Success!", {
                     timeOut: 2000,
@@ -236,8 +240,6 @@ $(document).ready(function () {
                     $.each(errors, function (key, message) {
                         form.find(`#${key}Error`).text(message[0]);
                     });
-
-
                 } else {
                     Swal.fire({
                         title: 'Error!',
@@ -249,6 +251,7 @@ $(document).ready(function () {
             }
         });
     });
+
 
 //==================================AJAX Ended==================================================//
 });

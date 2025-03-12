@@ -10,12 +10,14 @@ class ItemCategory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'item_categories';
-
     protected $fillable = [
-        'name',
-       
+        'name'
     ];
 
-    
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'item_category_id', 'id');
+    }
+
+
 }

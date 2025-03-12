@@ -6,8 +6,11 @@
 <!-- Required vendors -->
 <script src="{{ asset('assets/vendor/global/global.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/chart.js/Chart.bundle.min.js')  }}"></script>
-<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')  }}"></script>
 <script src="{{ asset('assets/vendor/apexchart/apexchart.js')  }}"></script>
+
+<!-- select2 -->
+<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')  }}"></script>
+<script src="{{ asset('assets/vendor/select2/js/select2.min.js')  }}"></script>
 
 
 <!-- Toastr -->
@@ -24,6 +27,10 @@
 <script src="{{ asset('assets/js/custom.js')  }}"></script>
 <script src="{{ asset('assets/js/deznav-init.js')  }}"></script>
 <script src="{{ asset('assets/js/styleSwitcher.js')  }}"></script>
+
+
+
+
 
 <script>
     var urlPath = '<?php echo url(""); ?>';
