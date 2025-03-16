@@ -33,15 +33,15 @@
 
 
 <script>
-    var urlPath = '<?php echo url(""); ?>';
-    var CSRF_TOKEN = '<?php echo csrf_token(); ?>';
+var urlPath = '<?php echo url(""); ?>';
+var CSRF_TOKEN = '<?php echo csrf_token(); ?>';
 
 
-    window.sessionMessages = {
-        success: @json(session('success')),
-        error: @json(session('error')),
-        info: @json(session('info'))
-    };
+window.sessionMessages = {
+    success: @json(session('success')),
+    error: @json(session('error')),
+    info: @json(session('info'))
+};
 </script>
 
 @stack('js')

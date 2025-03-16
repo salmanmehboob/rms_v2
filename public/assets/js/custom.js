@@ -100,7 +100,7 @@ $(document).ready(function () {
 
 
     // Initialize DataTables
-    if ($.fn.DataTable) {
+    if ($.fn.dataTable) {
 
         $('.datatable').DataTable({
             createdRow: function (row, data, index) {

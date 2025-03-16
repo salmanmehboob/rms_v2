@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Expense;
 use App\Models\ItemCategory;
-use Illuminate\Http\Request;
-use App\Http\Controllers\ItemCategoryController;
+use App\Models\ExpenseCategory;
+
 
 class DashboardController extends Controller
 {
@@ -33,6 +34,8 @@ class DashboardController extends Controller
 
         $itemCategoryCount = ItemCategory::count();
         $itemCount = Item::count();
-         return view('management',compact('itemCategoryCount' ,'itemCount'));
+        $expenseCategoryCount = ExpenseCategory::count();
+        $expenseCount = Expense::count();
+         return view('management',compact('itemCategoryCount' ,'itemCount', 'expenseCategoryCount', 'expenseCount'));
     }
 }

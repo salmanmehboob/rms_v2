@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <form id="itemForm" class="ajax-form" data-table="itemTable" action="{{ route('items.store') }}"
+                <form id="itemForm" class="ajax-form" data-table="itemTable" action="{{ route('expenses.store') }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -26,35 +26,30 @@
 
                     <div class="form-group">
                         <label>Category <span class="text-danger">*</span></label>
-                        <select name="item_category_id" class="single-select-placeholder select2" style="width: 100%;">
+                        <select name="expense_category_id" class="single-select-placeholder select2"
+                            style="width: 100%;">
                             <option value="" disabled selected>Select a category</option>
-                            @foreach($itemCategories as $category)
+                            @foreach($expenseCategories as $category)
                             <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                         </select>
 
-                        <div id="item_category_idError" class="text-danger mt-1"></div>
+                        <div id="expense_category_idError" class="text-danger mt-1"></div>
                     </div>
 
                     <div class="form-group">
-                        <label> Quantity <span class="text-danger">*</span></label>
-                        <input type="number" name="quantity" class="form-control" placeholder="Quantity">
-                        <div id="quantityError" class="text-danger mt-1"></div>
+                        <label> Expense Amount <span class="text-danger">*</span></label>
+                        <input type="number" name="Amount" class="form-control" placeholder="Amount">
+                        <div id="AmountError" class="text-danger mt-1"></div>
                     </div>
 
                     <div class="form-group">
-                        <label> Cost Price <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" name="cost_price" class="form-control"
-                            placeholder="Cost Price">
-                        <div id="costPriceError" class="text-danger mt-1"></div>
+                        <label> Expense Details<span class="text-danger">*</span></label>
+                        <textarea name="expense_details" class="form-control" placeholder="Expense Details"
+                            rows="5"></textarea>
+                        <div id="expensedetailsError" class="text-danger mt-1"></div>
                     </div>
 
-                    <div class="form-group">
-                        <label> Retail Price <span class="text-danger">*</span></label>
-                        <input type="number" step="0.01" name="retail_price" class="form-control"
-                            placeholder="Retail Price">
-                        <div id="retailPriceError" class="text-danger mt-1"></div>
-                    </div>
 
                     <div class="form-group">
                         <label> Image</label>
@@ -77,9 +72,8 @@
                             <th>Category</th>
                             <th>Image</th>
                             <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Cost Price</th>
-                            <th>Retail Price</th>
+                            <th>Expense Amount</th>
+                            <th>Expense Details</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -100,7 +94,7 @@ $(document).ready(function() {
     const table = $('#itemTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('items.index') }}",
+        ajax: "{{ route('expenses.index') }}",
         columns: [{
                 data: 'id',
                 name: 'id'
@@ -118,16 +112,12 @@ $(document).ready(function() {
                 name: 'name'
             },
             {
-                data: 'quantity',
-                name: 'quantity'
+                data: 'Amount',
+                name: 'Amount'
             },
             {
-                data: 'cost_price',
-                name: 'cost_price'
-            },
-            {
-                data: 'retail_price',
-                name: 'retail_price'
+                data: 'expense_details',
+                name: 'expense_details'
             },
             {
                 data: 'actions',
@@ -146,9 +136,8 @@ $(document).ready(function() {
         let id = $(this).data('id');
         let name = $(this).data('name');
         let image = $(this).data('image');
-        let quantity = $(this).data('quantity');
-        let costPrice = $(this).data('cost_price');
-        let retailPrice = $(this).data('retail_price');
+        let Amount = $(this).data('Amount');
+        let expensedetails = $(this).data('expense_details');
         let categoryId = $(this).data('category'); // Fixed here
         let formAction = $(this).data('url');
 
@@ -160,9 +149,8 @@ $(document).ready(function() {
         $('input[name="id"]').val(id);
         $('input[name="name"]').val(name);
         $('input[name="image"]').val(image);
-        $('input[name="quantity"]').val(quantity);
-        $('input[name="cost_price"]').val(costPrice);
-        $('input[name="retail_price"]').val(retailPrice);
+        $('input[name="Amount"]').val(Amount);
+        $('textarea[name="expense_details"]').val(expensedetails); // Populate textarea
         $('select[name="item_category_id"]').val(categoryId).trigger('change'); // Fixed here
 
         // Update button and show modal
@@ -173,12 +161,11 @@ $(document).ready(function() {
 
     // Reset form on new category add
     $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('items.store') }}"); // Reset to store action
+        $('form').attr('action', "{{ route('expenses.store') }}"); // Reset to store action
         $('form').find('input[name="_method"]').remove(); // Remove the PUT method
         $('input[name="name"]').val('');
         $('input[name="quantity"]').val('');
-        $('input[name="cost_price"]').val('');
-        $('input[name="retail_price"]').val('');
+        $('textarea[name="expense_details"]').val('');
         $('select[name="category_id"]').val(''); // Clear the input field
         $('#submitBtn').text('Save'); // Reset button text
         $(this).addClass('d-none');
@@ -188,7 +175,7 @@ $(document).ready(function() {
 
     // Cancel Update
     $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('items.store') }}");
+        $('form').attr('action', "{{ route('expenses.store') }}");
         $('form').find('input[name="_method"]').remove();
         $('form')[0].reset();
         $('#submitBtn').text('Save');

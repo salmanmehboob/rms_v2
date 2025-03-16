@@ -10,8 +10,8 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <form class="ajax-form" data-table="itemCategoriesTable" action="{{ route('item.categories.store') }}"
-                    method="POST">
+                <form class="ajax-form" data-table="expenseCategoriesTable"
+                    action="{{ route('expense.categories.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
@@ -30,7 +30,7 @@
 
             </div>
             <div class="col-md-8">
-                <table class="display table" id="itemCategoriesTable">
+                <table class="display table" id="expenseCategoriesTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -69,17 +69,17 @@ $(document).ready(function() {
 
     // Reset form on new category add
     $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('item.categories.store') }}"); // Reset to store action
+        $('form').attr('action', "{{ route('expense.categories.store') }}"); // Reset to store action
         $('form').find('input[name="_method"]').remove(); // Remove the PUT method
         $('input[name="name"]').val(''); // Clear the input field
         $('#submitBtn').text('Save'); // Reset button text
         $(this).addClass('d-none');
     });
 
-    $('#itemCategoriesTable').DataTable({
+    $('#expenseCategoriesTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('item.categories.index') }}",
+        ajax: "{{ route('expense.categories.index') }}",
         columns: [{
                 data: 'id',
                 name: 'id'
