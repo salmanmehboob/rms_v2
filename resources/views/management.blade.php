@@ -83,24 +83,44 @@
         </div>
     </div>
 
-    {{-- Placeholder for Users Section --}}
+    {{-- Placeholder for Tables Section --}}
     <div class="col-xl-3 col-lg-6 col-sm-6">
-        <div class="widget-stat card bg-success">
+        <div class="widget-stat card bg-primary">
             <div class="card-body p-4">
-                <a href="#">
+                <a href="{{ route('tables.index') }}">
                     <div class="media">
                         <span class="mr-3">
-                            <i class="flaticon-381-user-8"></i>
+                            <i class="flaticon-381-umbrella"></i>
                         </span>
                         <div class="media-body text-white text-right">
-                            <p class="mb-1">Users</p>
-                            <h3 class="text-white">0</h3>
+                            <p class="mb-1">Tables</p>
+                            <h3 class="text-white">{{$tableCount}}</h3>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
     </div>
+
+    {{-- Placeholder for Roles Section --}}
+    <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="widget-stat card bg-primary">
+            <div class="card-body p-4">
+                <a href="{{ route('roles.index') }}">
+                    <div class="media">
+                        <span class="mr-3">
+                            <i class="flaticon-381-umbrella"></i>
+                        </span>
+                        <div class="media-body text-white text-right">
+                            <p class="mb-1">Roles</p>
+                            <h3 class="text-white">{{$roleCount}}</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
 
 
 

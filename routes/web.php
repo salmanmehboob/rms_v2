@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TableController;
 
 // Home page
 Route::get('/', function () {
@@ -71,4 +73,36 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [ExpenseCategoryController::class, 'update'])->name('update'); // Update category
         Route::delete('/{id}', [ExpenseCategoryController::class, 'destroy'])->name('destroy'); // Delete category
     });
+
+
+    // ✅ Tables Routes (Standardized + Restore)
+    Route::prefix('tables')->name('tables.')->group(function () {
+        Route::get('/', [TableController::class, 'index'])->name('index'); // ✅ List all tables
+        Route::post('/', [TableController::class, 'store'])->name('store'); // ✅ Store new table
+        Route::get('/create', [TableController::class, 'create'])->name('create'); // ✅ Create form
+        Route::get('/{table}', [TableController::class, 'show'])->name('show'); // ✅ Show a specific table
+        Route::get('/{table}/edit', [TableController::class, 'edit'])->name('edit'); // ✅ Edit form
+        Route::put('/{table}', [TableController::class, 'update'])->name('update'); // ✅ Update table
+        Route::delete('/{table}', [TableController::class, 'destroy'])->name('destroy'); // ✅ Delete table
+        Route::post('/{id}/restore', [TableController::class, 'restore'])->name('restore'); // ✅ Restore soft-deleted table
+       
+        //this is the route for QR_code management
+        Route::post('/generate-qr/{id}', [TableController::class, 'generateQr'])->name('generateQr'); // QR Code Route
+
+    });
+
+
+    // ✅ Roles Routes (Standardized + Restore)
+    Route::prefix('roles')->name('roles.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index'); // ✅ List all Roles
+        Route::post('/', [RoleController::class, 'store'])->name('store'); // ✅ Store new Roles
+        Route::get('/create', [RoleController::class, 'create'])->name('create'); // ✅ Create form
+        Route::get('/{role}', [RoleController::class, 'show'])->name('show'); // ✅ Show a specific Roles
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('edit'); // ✅ Edit form
+        Route::put('/{role}', [RoleController::class, 'update'])->name('update'); // ✅ Update Roles
+        Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy'); // ✅ Delete Roles
+        Route::post('/{id}/restore', [RoleController::class, 'restore'])->name('restore'); // ✅ Restore soft-deleted Roles
+    });
+
+
 });

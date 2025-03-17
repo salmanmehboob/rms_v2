@@ -6,7 +6,8 @@ use App\Models\Item;
 use App\Models\Expense;
 use App\Models\ItemCategory;
 use App\Models\ExpenseCategory;
-
+use App\Models\Role;
+use App\Models\Table;
 
 class DashboardController extends Controller
 {
@@ -36,6 +37,8 @@ class DashboardController extends Controller
         $itemCount = Item::count();
         $expenseCategoryCount = ExpenseCategory::count();
         $expenseCount = Expense::count();
-         return view('management',compact('itemCategoryCount' ,'itemCount', 'expenseCategoryCount', 'expenseCount'));
+        $tableCount = Table::count();
+        $roleCount = Role::count();
+        return view('management',compact('itemCategoryCount' ,'itemCount', 'expenseCategoryCount', 'expenseCount', 'tableCount', 'roleCount'));
     }
 }

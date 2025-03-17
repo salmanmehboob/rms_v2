@@ -39,7 +39,7 @@
 
                     <div class="form-group">
                         <label> Expense Amount <span class="text-danger">*</span></label>
-                        <input type="number" name="Amount" class="form-control" placeholder="Amount">
+                        <input type="number" name="amount" class="form-control" placeholder="Amount">
                         <div id="AmountError" class="text-danger mt-1"></div>
                     </div>
 
@@ -112,8 +112,8 @@ $(document).ready(function() {
                 name: 'name'
             },
             {
-                data: 'Amount',
-                name: 'Amount'
+                data: 'amount',
+                name: 'amount'
             },
             {
                 data: 'expense_details',
@@ -136,7 +136,7 @@ $(document).ready(function() {
         let id = $(this).data('id');
         let name = $(this).data('name');
         let image = $(this).data('image');
-        let Amount = $(this).data('Amount');
+        let amount = $(this).data('amount');
         let expensedetails = $(this).data('expense_details');
         let categoryId = $(this).data('category'); // Fixed here
         let formAction = $(this).data('url');
@@ -149,9 +149,9 @@ $(document).ready(function() {
         $('input[name="id"]').val(id);
         $('input[name="name"]').val(name);
         $('input[name="image"]').val(image);
-        $('input[name="Amount"]').val(Amount);
+        $('input[name="amount"]').val(amount);
         $('textarea[name="expense_details"]').val(expensedetails); // Populate textarea
-        $('select[name="item_category_id"]').val(categoryId).trigger('change'); // Fixed here
+        $('select[name="expense_category_id"]').val(categoryId).trigger('change'); // Fixed here
 
         // Update button and show modal
         $('#submitBtn').text('Update');
@@ -164,23 +164,24 @@ $(document).ready(function() {
         $('form').attr('action', "{{ route('expenses.store') }}"); // Reset to store action
         $('form').find('input[name="_method"]').remove(); // Remove the PUT method
         $('input[name="name"]').val('');
-        $('input[name="quantity"]').val('');
+        $('input[name="image"]').val('');
+        $('input[name="amount"]').val('');
         $('textarea[name="expense_details"]').val('');
-        $('select[name="category_id"]').val(''); // Clear the input field
+        $('select[name="expense_category_id"]').val('').trigger('change');
         $('#submitBtn').text('Save'); // Reset button text
         $(this).addClass('d-none');
     });
 
 
 
-    // Cancel Update
-    $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('expenses.store') }}");
-        $('form').find('input[name="_method"]').remove();
-        $('form')[0].reset();
-        $('#submitBtn').text('Save');
-        $(this).addClass('d-none');
-    });
+    // // Cancel Update
+    // $(document).on('click', '#cancelBtn', function() {
+    //     $('form').attr('action', "{{ route('expenses.store') }}");
+    //     $('form').find('input[name="_method"]').remove();
+    //     $('form')[0].reset();
+    //     $('#submitBtn').text('Save');
+    //     $(this).addClass('d-none');
+    // });
 });
 </script>
 

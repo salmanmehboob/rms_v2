@@ -179,21 +179,21 @@ $(document).ready(function() {
         $('input[name="quantity"]').val('');
         $('input[name="cost_price"]').val('');
         $('input[name="retail_price"]').val('');
-        $('select[name="category_id"]').val(''); // Clear the input field
+        $('select[name="item_category_id"]').val('').trigger('change');
         $('#submitBtn').text('Save'); // Reset button text
         $(this).addClass('d-none');
     });
 
 
 
-    // Cancel Update
-    $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('items.store') }}");
-        $('form').find('input[name="_method"]').remove();
-        $('form')[0].reset();
-        $('#submitBtn').text('Save');
-        $(this).addClass('d-none');
-    });
+    //     // Cancel Update
+    //     $(document).on('click', '#cancelBtn', function() {
+    //         $('form').attr('action', "{{ route('items.store') }}");
+    //         $('form').find('input[name="_method"]').remove();
+    //         $('form')[0].reset();
+    //         $('#submitBtn').text('Save');
+    //         $(this).addClass('d-none');
+    //     });
 });
 </script>
 
