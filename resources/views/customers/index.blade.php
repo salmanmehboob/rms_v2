@@ -10,25 +10,29 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <form id="itemForm" class="ajax-form" data-table="rolesTable" action="{{ route('roles.store') }}"
-                    method="POST">
+                <form id="itemForm" class="ajax-form" data-table="customersTable"
+                    action="{{ route('customers.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group">
-                        <label>Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control" placeholder="Name">
+                        <label>Customer Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" placeholder="Customer Name">
                         <div id="nameError" class="text-danger mt-1"></div>
                     </div>
 
-
+                    <div class="form-group">
+                        <label>Customer Address <span class="text-danger">*</span></label>
+                        <input type="text" name="address" class="form-control" placeholder="Customer Address">
+                        <div id="addressError" class="text-danger mt-1"></div>
+                    </div>
 
                     <div class="form-group">
-                        <label>Status</label>
-                        <select name="status" class="form-control">
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
+                        <label>Customer Phone <span class="text-danger">*</span></label>
+                        <input type="phone" name="phone" class="form-control" placeholder="Customer Phone">
+                        <div id="phoneError" class="text-danger mt-1"></div>
                     </div>
+
+
 
                     <button type="submit" id="submitBtn" class="btn btn-primary mt-3 float-end">Save</button>
                     <button type="button" id="cancelBtn" class="btn btn-secondary mt-3 float-end me-2 d-none">
@@ -38,12 +42,13 @@
             </div>
 
             <div class="col-md-8">
-                <table class="display table" id="rolesTable">
+                <table class="display table" id="customersTable">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Status</th>
+                            <th>Customer Name</th>
+                            <th>Customer Address</th>
+                            <th>Customer Phone</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -60,10 +65,10 @@
 <script>
 $(document).ready(function() {
     // DataTable Initialization
-    const table = $('#rolesTable').DataTable({
+    const table = $('#customersTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('roles.index') }}",
+        ajax: "{{ route('customers.index') }}",
         columns: [{
                 data: 'id',
                 name: 'id'
@@ -73,9 +78,13 @@ $(document).ready(function() {
                 name: 'name'
             },
             {
-                data: 'status',
-                name: 'status'
-            }, // Added status column
+                data: 'address',
+                name: 'address'
+            },
+            {
+                data: 'phone',
+                name: 'phone'
+            },
             {
                 data: 'actions',
                 name: 'actions',
@@ -91,14 +100,16 @@ $(document).ready(function() {
 
         let id = $(this).data('id');
         let name = $(this).data('name');
-        let status = $(this).data('status');
+        let address = $(this).data('address');
+        let phone = $(this).data('phone');
         let formAction = $(this).data('url');
 
         $('form').attr('action', formAction);
         $('form').append('<input type="hidden" name="_method" value="PUT">');
 
         $('input[name="name"]').val(name);
-        $('select[name="status"]').val(status);
+        $('input[name="address"]').val(address);
+        $('input[name="phone"]').val(phone);
 
         $('#submitBtn').text('Update');
         $('#cancelBtn').removeClass('d-none');
@@ -106,10 +117,12 @@ $(document).ready(function() {
 
     // Reset form on cancel
     $(document).on('click', '#cancelBtn', function() {
-        $('form').attr('action', "{{ route('roles.store') }}");
+        $('form').attr('action', "{{ route('customers.store') }}");
         $('form').find('input[name="_method"]').remove();
         //   $('form')[0].reset();
         $('input[name="name"]').val('');
+        $('input[name="address"]').val('');
+        $('input[name="phone"]').val('');
         $('#submitBtn').text('Save');
         $(this).addClass('d-none');
     });

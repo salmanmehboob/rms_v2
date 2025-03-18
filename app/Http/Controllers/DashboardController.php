@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Expense;
 use App\Models\ItemCategory;
@@ -39,6 +40,7 @@ class DashboardController extends Controller
         $expenseCount = Expense::count();
         $tableCount = Table::count();
         $roleCount = Role::count();
-        return view('management',compact('itemCategoryCount' ,'itemCount', 'expenseCategoryCount', 'expenseCount', 'tableCount', 'roleCount'));
+        $customerCount = Customer::count();
+        return view('management',compact('itemCategoryCount' ,'itemCount', 'expenseCategoryCount', 'expenseCount', 'tableCount', 'roleCount', 'customerCount'));
     }
 }

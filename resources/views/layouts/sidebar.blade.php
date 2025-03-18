@@ -22,9 +22,9 @@
                           <a href="{{ route('home') }}">Dashboard</a>
                       </li>
                       <li
-                          class="{{ Route::is('management.dashboard', 'item.categories.index' ,  'items.index', 'expense.categories.index' ,  'expenses.index',  'tables.index' ,  'roles.index') ? 'mm-active' : '' }}">
+                          class="{{ Route::is('management.dashboard', 'item.categories.index' ,  'items.index', 'expense.categories.index' ,  'expenses.index',  'tables.index' ,  'roles.index',  'customers.index') ? 'mm-active' : '' }}">
                           <a href="{{ route('management.dashboard') }}"
-                              class="{{ Route::is('management.dashboard', 'item.categories.index', 'items.index', 'expense.categories.index' ,  'expenses.index',  'tables.index' ,  'roles.index') ? 'mm-active' : '' }}">Management
+                              class="{{ Route::is('management.dashboard', 'item.categories.index', 'items.index', 'expense.categories.index' ,  'expenses.index',  'tables.index' ,  'roles.index',  'customers.index') ? 'mm-active' : '' }}">Management
                               Dashboard</a>
 
 

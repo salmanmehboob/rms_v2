@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('name'); // Expense name
             $table->string('image')->nullable(); // Optional image
-            $table->integer('Amount'); // Quantity of expense
+            $table->integer('amount'); // Quantity of expense
             $table->string('expense_details'); // Cost price
             $table->boolean('is_stock')->default(1); // Boolean for stock
             $table->softDeletes(); // Soft deletes

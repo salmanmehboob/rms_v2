@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <form id="itemForm" class="ajax-form" data-table="itemTable" action="{{ route('expenses.store') }}"
+                <form id="itemForm" class="ajax-form" data-table="expensesTable" action="{{ route('expenses.store') }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label> Expense Amount <span class="text-danger">*</span></label>
                         <input type="number" name="amount" class="form-control" placeholder="Amount">
-                        <div id="AmountError" class="text-danger mt-1"></div>
+                        <div id="amountError" class="text-danger mt-1"></div>
                     </div>
 
                     <div class="form-group">
@@ -65,7 +65,7 @@
             </div>
 
             <div class="col-md-8">
-                <table class="display table" id="itemTable">
+                <table class="display table" id="expensesTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -91,7 +91,7 @@
 <script>
 $(document).ready(function() {
     // DataTable Initialization
-    const table = $('#itemTable').DataTable({
+    const table = $('#expensesTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('expenses.index') }}",

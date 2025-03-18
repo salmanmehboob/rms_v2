@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <form id="itemForm" class="ajax-form" data-table="itemTable" action="{{ route('tables.store') }}"
+                <form id="itemForm" class="ajax-form" data-table="tablesTable" action="{{ route('tables.store') }}"
                     method="POST">
                     @csrf
 
@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-md-8">
-                <table class="display table" id="itemTable">
+                <table class="display table" id="tablesTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -66,7 +66,7 @@
 <script>
 $(document).ready(function() {
     // DataTable Initialization
-    const table = $('#itemTable').DataTable({
+    const table = $('#tablesTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('tables.index') }}",

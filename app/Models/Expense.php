@@ -14,7 +14,7 @@ class Expense extends Model
         'expense_category_id',
         'name',
         'image',
-        'Amount',
+        'amount',
         'expense_details',
         'is_stock',
     ];

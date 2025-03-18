@@ -27,7 +27,7 @@ class RoleController extends Controller
                 ->addColumn('actions', function ($role) {
                     return '
                     <div class="d-flex">
-                        <a id="editBtn" data-url="' . route('tables.update', $role->id) . '"
+                        <a id="editBtn" data-url="' . route('roles.update', $role->id) . '"
                            data-id="' . $role->id . '"
                            data-name="' . $role->name . '"
                            data-status="' . $role->status . '"
@@ -35,7 +35,7 @@ class RoleController extends Controller
                            class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
 
                         <a href="javascript:void(0)"
-                           data-url="' . route('tables.destroy', $role->id) . '"
+                           data-url="' . route('roles.destroy', $role->id) . '"
                            data-id="' . $role->id . '"
                            class="btn btn-danger shadow btn-xs sharp delete-record"
                            title="Delete"><i class="fa fa-trash"></i></a>

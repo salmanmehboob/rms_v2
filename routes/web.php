@@ -9,6 +9,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\CustomerController;
 
 // Home page
 Route::get('/', function () {
@@ -102,6 +103,18 @@ Route::middleware('auth')->group(function () {
         Route::put('/{role}', [RoleController::class, 'update'])->name('update'); // ✅ Update Roles
         Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy'); // ✅ Delete Roles
         Route::post('/{id}/restore', [RoleController::class, 'restore'])->name('restore'); // ✅ Restore soft-deleted Roles
+    });
+
+    // ✅ Customers Routes (Standardized + Restore)
+    Route::prefix('customers')->name('customers.')->group(function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('index'); // ✅ List all Roles
+        Route::post('/', [CustomerController::class, 'store'])->name('store'); // ✅ Store new Roles
+        Route::get('/create', [CustomerController::class, 'create'])->name('create'); // ✅ Create form
+        Route::get('/{customer}', [CustomerController::class, 'show'])->name('show'); // ✅ Show a specific Roles
+        Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('edit'); // ✅ Edit form
+        Route::put('/{customer}', [CustomerController::class, 'update'])->name('update'); // ✅ Update Roles
+        Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('destroy'); // ✅ Delete Roles
+        Route::post('/{id}/restore', [CustomerController::class, 'restore'])->name('restore'); // ✅ Restore soft-deleted Roles
     });
 
 

@@ -55,7 +55,7 @@ class ExpenseController extends Controller
                            data-url="' . route('expenses.destroy', $expense->id) . '"
                            data-label="delete"
                            data-id="' . $expense->id . '"
-                           data-table="itemTable"
+                            data-table="expensesTable"
                            class="btn btn-danger shadow btn-xs sharp delete-record"
                            title="Delete Record"><i class="fa fa-trash"></i></a>
                     </div>
@@ -85,7 +85,7 @@ class ExpenseController extends Controller
                 'expense_category_id' => 'required|exists:expense_categories,id',
                 'name' => 'required|string|max:255|unique:expenses,name',
                 'image' => 'nullable|image|max:2048',
-                'Amount' => 'required|integer',
+                'amount' => 'required|integer',
                 'expense_details' => 'required|string|max:65535', // Adjust max length as needed                'is_stock' => 'boolean',
             ]);
 
@@ -152,7 +152,7 @@ class ExpenseController extends Controller
             'expense_category_id' => 'required|exists:expense_categories,id',
             'name' => 'required|string|max:255|unique:expenses,name,' . $expense->id,
             'image' => 'nullable|image|max:2048',
-            'Amount' => 'required|integer',
+            'amount' => 'required|integer',
             'expense_details' => 'required|string|max:65535', // Adjust max length as needed            'is_stock' => 'boolean',
         ]);
 
